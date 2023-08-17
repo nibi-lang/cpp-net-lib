@@ -21,17 +21,17 @@
 using socket_t = SOCKET;
 using socklen_t = int32_t;
 using ssize_t = signed long long int;
-//we don't have signals on windows
+// we don't have signals on windows
 #define MSG_NOSIGNAL 0
-//poll implementation
+// poll implementation
 #define poll_syscall ::WSAPoll
-//we ignore unused parameter warning on windows, missing impls
-#pragma warning(disable: 4100)
-//use unsafe functions under windows
+// we ignore unused parameter warning on windows, missing impls
+#pragma warning(disable : 4100)
+// use unsafe functions under windows
 #define _CRT_SECURE_NO_WARNINGS
-#pragma warning(disable:4996)
-#pragma warning(disable:4267)
-#pragma warning(disable:4244)
+#pragma warning(disable : 4996)
+#pragma warning(disable : 4267)
+#pragma warning(disable : 4244)
 
 #else
 // headers
@@ -50,9 +50,9 @@ using socket_t = int32_t;
 // this is actually a nice one to have
 #define INVALID_SOCKET (-1)
 #ifdef __APPLE__
-    #ifndef MSG_NOSIGNAL
-        #define MSG_NOSIGNAL SO_NOSIGPIPE
-    #endif
+#ifndef MSG_NOSIGNAL
+#define MSG_NOSIGNAL SO_NOSIGPIPE
+#endif
 #endif
 #endif
 
@@ -113,7 +113,8 @@ public:
 #endif
     }
 
-    std::optional<std::size_t> get_recv_buffer_size() {
+    std::optional<std::size_t> get_recv_buffer_size()
+    {
 #ifdef _WIN32
 #else
         int32_t buffer_size = 0;
@@ -125,7 +126,8 @@ public:
 #endif
     }
 
-    std::optional<std::size_t> get_send_buffer_size() {
+    std::optional<std::size_t> get_send_buffer_size()
+    {
 #ifdef _WIN32
 #else
         int32_t buffer_size = 0;
@@ -137,7 +139,8 @@ public:
 #endif
     }
 
-    bool set_recv_buffer_size(std::size_t buf_size) {
+    bool set_recv_buffer_size(std::size_t buf_size)
+    {
 #ifdef _WIN32
 #else
         auto buffer_size = static_cast<int32_t>(buf_size);
@@ -145,7 +148,8 @@ public:
 #endif
     }
 
-    bool set_send_buffer_size(std::size_t buf_size) {
+    bool set_send_buffer_size(std::size_t buf_size)
+    {
 #ifdef _WIN32
 #else
         auto buffer_size = static_cast<int32_t>(buf_size);
@@ -153,7 +157,8 @@ public:
 #endif
     }
 
-    bool set_nagle(bool enable) {
+    bool set_nagle(bool enable)
+    {
 #ifdef _WIN32
         int32_t val = static_cast<int32_t>(enable);
         return setsockopt(_socket.value(), IPPROTO_TCP, TCP_NODELAY, reinterpret_cast<char *>(&val), sizeof(val)) == 0;

@@ -13,7 +13,6 @@ private:
     static constexpr std::size_t MAX_CHUNK_SIZE = 4096;
 
 public:
-
     static inline std::pair<std::size_t, std::error_condition> send(const netlib::socket &sock, const std::vector<uint8_t> &data,
                                                                     std::chrono::milliseconds timeout)
     {

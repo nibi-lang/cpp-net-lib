@@ -195,7 +195,7 @@ private:
 
     inline std::error_condition handle_client(client_endpoint endpoint)
     {
-        //we already know that this socket has some data, so we dont timeout here
+        // we already know that this socket has some data, so we dont timeout here
         auto recv_result = netlib::operations::recv(endpoint.socket, 0);
         if (!recv_result.first.empty() && _cb_on_recv) {
             netlib::server_response response = _cb_on_recv(endpoint, recv_result.first);

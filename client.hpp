@@ -19,7 +19,8 @@ class client {
 protected:
     std::optional<netlib::socket> _socket;
     addrinfo *_endpoint_addr = nullptr;
-    netlib::thread_pool _thread_pool = netlib::thread_pool::create<1,1>();
+    netlib::thread_pool _thread_pool = netlib::thread_pool::create<1, 1>();
+
 public:
     client()
     {
@@ -36,7 +37,8 @@ public:
         disconnect();
     }
     inline std::error_condition connect(const std::string &host, const std::variant<std::string, uint16_t> &service,
-                                        AddressFamily address_family, AddressProtocol address_protocol, std::chrono::milliseconds timeout = DEFAULT_TIMEOUT)
+                                        AddressFamily address_family, AddressProtocol address_protocol,
+                                        std::chrono::milliseconds timeout = DEFAULT_TIMEOUT)
     {
         if (is_connected()) {
             auto ec = disconnect();
@@ -113,7 +115,6 @@ public:
             },
             data, timeout);
     }
-
 
     /*!
      * @brief Send data to a server.
